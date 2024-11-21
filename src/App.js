@@ -1,31 +1,70 @@
 import React, { useState } from 'react';
 import zxcvbn from 'zxcvbn';
+import './App.css';
 
 function App() {
   const [password, setPassword] = useState('');
   const [result, setResult] = useState(null);
 
-  const handlePasswordChange = (event) => {
-    const password = event.target.value;
-    setPassword(password);
+  const checkStrength = (password) => {
+    const analysis = zxcvbn(password);
+    setResult(analysis);
+  };
 
-    const feedback = zxcvbn(password);
-    setResult(feedback);
+  const getScoreColor = (score) => {
+    const colors = ['#ff4444', '#ffaa00', '#ffff00', '#00aa00', '#00ff00'];
+    return colors[score] || colors[0];
+  };
+
+  const getScoreText = (score) => {
+    const texts = ['Very Weak', 'Weak', 'Fair', 'Strong', 'Very Strong'];
+    return texts[score] || texts[0];
   };
 
   return (
-    <div className="password-checker">
-      <input type="password" value={password} onChange={handlePasswordChange} />
+    <div className="App" style={{ width: '300px', padding: '20px' }}>
+      <h1>Password Strength Checker</h1>
+      
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          checkStrength(e.target.value);
+        }}
+        placeholder="Enterr password to check"
+        style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
+      />
+
       {result && (
         <div>
-          <p>Strength: {result.score}</p>
-          <p>Estimated Cracking Time:</p>
-          <ul>
-            <li>Offline, slow hashing: {result.crack_times_display.offline_slow_hashing_1e4_per_second}</li>
-            <li>Offline, fast hashing: {result.crack_times_display.offline_fast_hashing_1e10_per_second}</li>
-            <li>Online cracking: {result.crack_times_display.online_no_throttling_100_per_second}</li>
-          </ul>
-          {/* Other feedbaack and suggestions */}
+          <div 
+            style={{ 
+              backgroundColor: getScoreColor(result.score),
+              padding: '10px',
+              borderRadius: '4px',
+              marginBottom: '10px',
+              color: result.score <= 2 ? 'black' : 'white'
+            }}
+          >
+            Strength: {getScoreText(result.score)}
+          </div>
+
+          {result.feedback.warning && (
+            <div style={{ color: '#ff4444', marginBottom: '10px' }}>
+              Warning: {result.feedback.warning}
+            </div>
+          )}
+
+          {result.feedback.suggestions?.map((suggestion, index) => (
+            <div key={index} style={{ fontSize: '0.9em', marginBottom: '5px' }}>
+              • {suggestion}
+            </div>
+          ))}
+
+          <div style={{ marginTop: '10px', fontSize: '0.9em' }}>
+            Time to crack: {result.crack_times_display.offline_slow_hashing_1e4_per_second}
+          </div>
         </div>
       )}
     </div>

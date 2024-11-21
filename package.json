@@ -2,6 +2,7 @@
   "name": "password-strength-checker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://donrufio.github.io/password-strength-checker",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -12,11 +13,17 @@
     "web-vitals": "^2.1.4",
     "zxcvbn": "^4.4.2"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.2.0"
+  },
+ "scripts": {
+    "start": "cross-env INLINE_RUNTIME_CHUNK=false react-scripts start",
+    "build": "cross-env INLINE_RUNTIME_CHUNK=false react-scripts build",
+    "test": "react-scripts test --passWithNoTests",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build && git add . && git commit -m \"Update main with latest changes\" && git push origin main"
   },
   "eslintConfig": {
     "extends": [

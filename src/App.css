@@ -1,39 +1,31 @@
-.password-checker {
-  background-color: #222;
-  color: #fff;
-  padding: 20px;
+.App {
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.password-input {
-  width: 100%;
-  padding: 10px;
+.App h1 {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+input {
   border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #333;
-  color: #fff;
+  border-radius: 4px;
+  font-size: 1em;
 }
 
-.strength-meter {
-  width: 100%;
-  height: 20px;
-  background-color: #ddd;
-  border-radius: 5px;
-  margin-top: 10px;
+input:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
-.strength-bar {
-  height: 100%;
-  border-radius: 5px;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.weak {
-  background-color: #f00;
-}
-
-.medium {
-  background-color: #ff9900;
-}
-
-.strong {
-  background-color: #00cc00;
+.App > div {
+  animation: fadeIn 0.3s ease-out;
 }

@@ -1,0 +1,22 @@
+# Automatically normalize line endings
+* text=auto
+
+# Explicitly define line endings for specific files
+*.sh text eol=lf       # Shell scripts use LF
+*.bat text eol=crlf    # Batch files use CRLF
+*.md text eol=lf       # Markdown files use LF
+
+# Binary files (do not normalize line endings)
+*.png binary
+*.jpg binary
+*.gif binary
+*.zip binary
+*.ico binary
+*.svg binary
+
+# Ignore any changes in CRLF/LF for certain files
+*.json text
+*.js text
+*.css text
+*.html text
+*.xml text

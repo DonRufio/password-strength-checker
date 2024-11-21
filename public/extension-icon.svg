@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Background Circle -->
+  <circle cx="64" cy="64" r="60" fill="#4A90E2"/>
+  
+  <!-- Lock Body -->
+  <rect x="38" y="56" width="52" height="42" rx="4" fill="#FFFFFF"/>
+  
+  <!-- Lock Shackle -->
+  <path d="M 48 56 L 48 38 C 48 28 80 28 80 38 L 80 56" 
+        stroke="#FFFFFF" 
+        fill="none" 
+        stroke-width="8" 
+        stroke-linecap="round"/>
+  
+  <!-- Strength Indicator Lines -->
+  <rect x="48" y="70" width="12" height="4" fill="#FF4444"/>
+  <rect x="64" y="70" width="12" height="4" fill="#FFAA00"/>
+  <rect x="80" y="70" width="12" height="4" fill="#00FF00"/>
+</svg>

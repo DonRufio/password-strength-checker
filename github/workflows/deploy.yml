@@ -1,18 +1,123 @@
-name: Deploy to GitHub Pages
+name: Build and Deploy Chrome Extension
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+      fail-fast: true
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Build
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install gh-pages --save-dev
+
+      - name: Check manifest.json
+        run: |
+          if [ ! -f "public/manifest.json" ]; then
+            echo "Error: manifest.json not found in public directory"
+            exit 1
+          fi
+
+      - name: Run tests
+        run: npm test -- --passWithNoTests
+        if: always() && hashFiles('**/test/**') != ''
+
+      - name: Build extension
         run: npm run build
-      - name: Deploy
+        env:
+          CI: false
+          INLINE_RUNTIME_CHUNK: false
+
+      - name: Verify build
+        run: |
+          if [ ! -f "build/manifest.json" ]; then
+            echo "Error: Build failed - manifest.json not found in build directory"
+            exit 1
+          fi
+
+      - name: Commit and Push Changes to Main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Automated updates from GitHub Actions"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Zip Extension
+        run: |
+          cd build
+          zip -r ../extension.zip * -x "*.map"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: extension-build
+          path: |
+            extension.zip
+            build/
+          if-no-files-found: error
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: build
+          clean: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: extension.zip
+          tag_name: v${{ github.run_number }}
+          name: "Release v${{ github.run_number }}"
+          body: |
+            Chrome Extension Release v${{ github.run_number }}
+            
+            This release includes:
+            - Built extension package
+            - Updated manifest version
+            
+            To install:
+            1. Download the extension.zip file
+            2. Unzip the file
+            3. Go to chrome://extensions/
+            4. Enable Developer Mode
+            5. Click "Load unpacked"
+            6. Select the unzipped folder
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Handle Errors
+        if: failure()
+        run: |
+          echo "Workflow failed. Please check the build logs for more information."
+          exit 1
