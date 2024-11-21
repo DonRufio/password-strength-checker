@@ -2,7 +2,7 @@
   "name": "password-strength-checker",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://donrufio.github.io/password-strength-checker",
+  "homepage": "./",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
