@@ -25,7 +25,7 @@ function App() {
             <li>Offline, fast hashing: {result.crack_times_display.offline_fast_hashing_1e10_per_second}</li>
             <li>Online cracking: {result.crack_times_display.online_no_throttling_100_per_second}</li>
           </ul>
-          {/* Other feedback and suggestions */}
+          {/* Other feedbaack and suggestions */}
         </div>
       )}
     </div>
