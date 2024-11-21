@@ -32,7 +32,7 @@ function App() {
           setPassword(e.target.value);
           checkStrength(e.target.value);
         }}
-        placeholder="Enterr password to check"
+        placeholder="Enter password to check"
         style={{ width: '100%', padding: '8px', marginBottom: '10px' }}
       />
 
