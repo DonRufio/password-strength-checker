@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Password Strength Checker",
+  "version": "1.0",
+  "description": "A robust password strength checker",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Check Password Strength"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": ["activeTab"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}
