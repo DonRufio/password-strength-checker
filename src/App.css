@@ -1,31 +1,111 @@
+/* Base Styles */
 .App {
   text-align: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: #f1f1f1;
+  background: #1e1e2e; /* Dark mode background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .App h1 {
-  font-size: 1.5em;
+  font-size: 1.8em;
   margin-bottom: 20px;
-  color: #333;
+  color: #e0e0e0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background: #2b2b40;
+  border: 1px solid #444;
+  border-radius: 6px;
   font-size: 1em;
+  color: #e1e1e1;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 15px;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input::placeholder {
+  color: #777;
 }
 
 input:focus {
   outline: none;
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  border-color: #6a94ff;
+  box-shadow: 0 0 5px rgba(106, 148, 255, 0.8);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
+/* Strength Bar */
 .App > div {
   animation: fadeIn 0.3s ease-out;
+}
+
+/* Strength Feedback Box */
+.feedback-box {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #fff;
+  text-align: left;
+}
+
+/* Color Mapping for Strength */
+.feedback-box.very-weak {
+  background: linear-gradient(135deg, #b71c1c, #f44336);
+}
+
+.feedback-box.weak {
+  background: linear-gradient(135deg, #f57c00, #ff9800);
+}
+
+.feedback-box.fair {
+  background: linear-gradient(135deg, #fbc02d, #ffeb3b);
+}
+
+.feedback-box.strong {
+  background: linear-gradient(135deg, #388e3c, #4caf50);
+}
+
+.feedback-box.very-strong {
+  background: linear-gradient(135deg, #00796b, #009688);
+}
+
+/* Suggestions */
+.suggestions {
+  font-size: 0.9em;
+  color: #b0b0b0;
+  text-align: left;
+  margin-top: 10px;
+}
+
+/* Warning */
+.warning {
+  color: #ff6f61;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 10px;
+}
+
+/* Time to Crack */
+.crack-time {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #a0a0a0;
+  text-align: left;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

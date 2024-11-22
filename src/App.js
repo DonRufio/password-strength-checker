@@ -11,9 +11,9 @@ function App() {
     setResult(analysis);
   };
 
-  const getScoreColor = (score) => {
-    const colors = ['#ff4444', '#ffaa00', '#ffff00', '#00aa00', '#00ff00'];
-    return colors[score] || colors[0];
+  const getScoreClass = (score) => {
+    const classes = ['very-weak', 'weak', 'fair', 'strong', 'very-strong'];
+    return classes[score] || 'very-weak';
   };
 
   const getScoreText = (score) => {
@@ -38,17 +38,11 @@ function App() {
 
       {result && (
         <div>
-          <div 
-            style={{ 
-              backgroundColor: getScoreColor(result.score),
-              padding: '10px',
-              borderRadius: '4px',
-              marginBottom: '10px',
-              color: result.score <= 2 ? 'black' : 'white'
-            }}
-          >
-            Strength: {getScoreText(result.score)}
+          <div className={`feedback-box ${getScoreClass(result.score)}`}
+>
+              Strength: {getScoreText(result.score)}
           </div>
+
 
           {result.feedback.warning && (
             <div style={{ color: '#ff4444', marginBottom: '10px' }}>

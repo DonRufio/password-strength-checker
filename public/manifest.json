@@ -13,6 +13,18 @@
     "128": "icon128.png"
   },
   "permissions": ["activeTab"],
+  "commands": {
+    "open-extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Open the Password Strength Checker extension"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   }
